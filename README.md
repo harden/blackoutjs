@@ -6,9 +6,9 @@ Simple one document discord bot written in JavaScript.
 - open cmd (must have GitHub Desktop installed) type git clone https://github.com/grapheetee/blackout.js
 - edit the config.json file with any text editor, and input your bot's token in the field provided.
 - install node.js(https://nodejs.org/en/) the do the following in a cmd window
-      - npm install discord.js@latest
-       -node index.js (be in navigated to the folder index.js is in)
-        - tip: use nodemon(https://nodemon.io/) if you want the bot to restart everytime you control + S, this reloads the project and adds           your changes.
+-npm install discord.js@latest
+-node index.js (be in navigated to the folder index.js is in)
+-tip: use nodemon(https://nodemon.io/) if you want the bot to restart everytime you control + S, this reloads the project and adds your changes.
 
 
 # set up longer (without git)
@@ -22,6 +22,6 @@ Simple one document discord bot written in JavaScript.
 }
 
 -install node.js(https://nodejs.org/en/) the do the following in a cmd window
-      - npm install discord.js@latest
-       -node index.js (be in navigated to the folder index.js is in)
-        - tip: use nodemon(https://nodemon.io/) if you want the bot to restart everytime you control + S, this reloads the project and adds           your changes.
+-npm install discord.js@latest
+-node index.js (be in navigated to the folder index.js is in)
+-tip: use nodemon(https://nodemon.io/) if you want the bot to restart everytime you control + S, this reloads the project and adds your changes.
