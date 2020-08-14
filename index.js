@@ -1,34 +1,24 @@
-const Discord = require("discord.js");
+const Discord = require("discord.js"); 
 const client = new Discord.Client();
 
- 
- 
-function customPassword() {
-  var password = "";
-  var randomLength = Math.floor(Math.random() * (maxLength - minLength)) + minLength;
-  while (!isStrongEnough(password)) {
-    password = generatePassword(randomLength, false, /[\w\d\?\-]/);
-  }
-  return password;
-}
 var today = new Date(); // this function just receives the current time and date for some of the commands to print
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); 
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime = date+' '+time;
 
-// juan is an actual retard
 
 
 
 
+ // !!!! ATTENTION FOR BOT TO WORK PUT TOKEN in "./config.json"
 const config = require("./config.json");
 
 client.on("ready",  () => {
  
   console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`);
   console.log("bot is now online ---- started at " + dateTime)
- // client.users.cache.get('217133751036018698').send("bot is now online ---- started at  " + dateTime) makes it message the owner replace discord id with yours
-  client.user.setActivity(`blackout modworks`);
+ // client.users.cache.get('enter you discord id').send("bot is now online ---- started at  " + dateTime) makes it message the owner replace discord id with yours
+  client.user.setActivity(`(-help) Serving ${client.guilds.cache.size} servers`);
 });
 
 client.on("guildCreate", guild => {
@@ -45,7 +35,7 @@ client.on("guildDelete", guild => {
 });
 
 
-client.on("message", async message => {
+client.on("message", async message => {           //  makes sure that the bot only reads messages that start with the prefix  (set in config.json)
   
   if(message.author.bot) return;
   
@@ -58,14 +48,13 @@ client.on("message", async message => {
 
   
   if(command === "ping") {
-    if(!message.member.roles.cache.some(r=>["Verified"].includes(r.name)))
-    return message.reply("Sorry, you don't have permissions to use this!");
     const m = await message.channel.send("Calculating....");
     m.edit(`Looking for this ms. ---- ${Math.round(client.ws.ping)}ms:white_check_mark: `);
 
   }
   
-  if(command === "say") {
+  if(command === "say") { // makes the bot say whatever the user says (doesnt run commands)
+    
     
     const sayMessage = args.join(" ");
     
@@ -75,7 +64,7 @@ client.on("message", async message => {
   
   if(command === "ban") {
     
-    if(!message.member.roles.cache.some(r=>["Admin", "Owner"].includes(r.name)))
+    if(!message.member.roles.cache.some(r=>["Admin", "Owner"].includes(r.name)))      // honestly you could make a way better ban command in 5 minutes but im too lazy to ban people using a bot
       return message.reply("Sorry, you don't have permissions to use this!");
     
     let member = message.mentions.members.first();
@@ -89,31 +78,16 @@ client.on("message", async message => {
     
     await member.ban(reason)
       .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`); // if you don't have perms to ban, the bot displays that. if you do have perms to ban it bans them and displays the message in chat.
   }
 
   if (command === "kick") {
-    if (!message.member.roles.find("Admin"))
-        return;
-    // Easy way to get member object though mentions.
-    var member = message.mentions.members.first();
-    // Kick
-    member.kick().then((member) => {
-        // Successmessage
-        message.channel.send(":wave: " + member.displayName + " has been successfully kicked :point_right: ");
-    }).catch(() => {
-        // Failmessage
-        message.channel.send("Access Denied");
-    });
+   message.channel.send("coming soon")
 }
-
-  if (command === "warn") {
-    if(!message.member.roles.cache.some(r=>["Admin", "Moderator"].includes(r.name))) return
-    
-  }
    
   if(command === "purge") {
-    
+    if(!message.member.roles.cache.some(r=>["Admin", "Owner", "Moderator"].includes(r.name)))      
+    return message.reply("Sorry, you don't have permissions to use this!");
         const deleteCount = parseInt(args[0], 10);
      
     
@@ -126,69 +100,47 @@ client.on("message", async message => {
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
 
-  if(command === "zilla") {
-    message.author.send("https://drive.google.com/open?id=1vBReR0KZLJQLMxzkaRXU6-YdAsiFJHoJ")
-    message.author.send("Sorry for any inconvenience!")
-
-  }
-
-    if(command === "messyhair") {
-      message.author.send("https://cdn.discordapp.com/attachments/497557900315590656/508014757979357207/hair_006_u.ydd")
-    }
-
-    if(command === "waistbag") {
-      message.author.send("https://cdn.discordapp.com/attachments/495300535717593099/649636303087992842/task_005_u.ydd")
-    }
-
-    
-
     if (command === "dice") {
       var dice = ['1', '2', '3', '4', '5', '6'] [Math.floor(Math.random() * 6)];
       message.channel.send("You rolled a " + dice)
         
         } 
-var ip = ['85.118.127.255', '	85.117.63.255', '217.72.4.4', '100.30.98.191', '33.48.204.179', '85.87.113.130'] [Math.floor(Math.random() * 6)];   // this does like actually nothing at all lol picks random ip from list
 
     
   if (command === "status") {
-   message.channel.send("in the works...")
+   message.channel.send("Bot is online. --- " + dateTime)
   }
 
-  if (command === "gamecords") {
-    message.author.send("Valorant - https://discord.gg/valorant Rising Storm 2 - https://discord.gg/rs2vietnam SkaterXL Modding - https://discord.gg/EMhvped")
-    if(message.author.id === client.user.id) return;
-    console.log("invites have been dispactched to")
-      console.log(message.author.id)
-      console.log(dateTime)
-      console.log(message.member)
-  }
-
-  if (command === "home") {
-    message.author.send("https://blackout.pw/discord")
+  if (command === "source") {
+    message.author.send("https://github.com/grapheetee/blackoutjs/")
+    
   }
 
 
-  if (command === "swaggersex") {
-    client.users.cache.get('448096214584524810').send('https://cdn.discordapp.com/attachments/318067268032659466/742972018374213702/vDA149F0-8DA2-4B61-96C9-E891C2B50F3D.mp4');
-    client.users.cache.get('448096214584524810').send('THIS IS THE INTERNET POLISE OPEN UPPPPPPPPPPPPPPPPPPPP NOWWWWWWWWWWWWWW')
-  }
-
-  if (command === "members") {
-    message.channel.send(`${guild.memberCount}`);
-
+  if (command === "dm") {
+    client.users.cache.get('448096214584524810').send('import message here');             // right click someone's name on discord you wish to dm (must be in developer mode) then input after
+    client.users.cache.get('448096214584524810').send('import message here')              // client.users.cache.get('putdiscordidhere').send('message here')
   }
 
   if (command ===  "8ball") {
-  var ball = ["I don't think thats a good idea.", "Go for it, give it a try.", "Absolutely not.", "Maybe you should think this over yourself.", "50/50 Honestly", 'Goodluck.'] [Math.floor(Math.random() * 6)];
-    message.channel.send(":fortune_cookie: The 8ball concludes: " + ball)
+  var ball = ["I don't think thats a good idea.", "Go for it, give it a try.", "Absolutely not.", "Maybe you should think this over yourself.", "50/50 Honestly", 'Goodluck.'] [Math.floor(Math.random() * 6)]; 
+    message.channel.send(":fortune_cookie: The 8ball concludes: " + ball)  // this command is simple, you input an idea you question, and the 8 ball gives you an answer.
+                                                                              // you can add more list items to the variable, just change the Math.random number at the end to the total items you have
 }
 
 if(command === "help") {
   const embed = new Discord.MessageEmbed()
-    embed.setColor("#FF00FF")
-    embed.addField("", ``)
-    embed.addField("", ``)
-  
+    embed.setColor("#C16DF7")
+    embed.addField("-whois", `This command tells you info about the user that types it username,id,nickname,account date creation`)
+    embed.addField("-8ball", `This command is simple, you input an idea you question, and the 8 ball gives you an answer.`)
+    embed.addField("-av @tag#0001", `Enhances the tagged user's avatar for the channel to view.`)
+    embed.addField("-ping", `Shows the user's ping to the Discord API.`)
+    embed.addField("-dice", `Rolls a die, 1-6.`)
+    embed.addField("-source", `Provides the link to the source code of this discord bot so you can make one for yourself!`)
+    embed.addField("-status", `Shows if the bot is online and watching for the (-) prefix.`)
+    embed.addField("-kick", `Under dev. as of 8/13/2020 (coming soon)`)
+    embed.addField("-ban", `-ban user reason (drops the ban hammer obviously)`)
+    embed.addField("purge", `-purge <# from 2-100> (deletes (#) many messages)`)
 
   message.channel.send(embed);
   return;
@@ -197,31 +149,18 @@ if(command === "help") {
    if (command === "whois") {
     const embed = new Discord.MessageEmbed()
     embed.setAuthor(message.author.username)
-    embed.setDescription("Information about yourself")
-    embed.setColor("#FF00FF")
+    embed.setDescription("Information about message sender:")
+    embed.setColor("#C16DF7")
     embed.addField("Full Username", `${message.author.username}#${message.author.discriminator}`)
     embed.addField("ID", message.author.id)
     embed.addField("Nickname:", `${message.nickname !== null ? `${message.nickname}` : 'None'}`, true)
     embed.addField("Created At", message.author.createdAt)
     embed.addField("You Joined the server at", message.member.joinedAt)
-    embed.addField("IP Address: ", ip)
-    embed.addField("Father's Last Name: ")
-
     message.channel.send(embed);
 
     return;
    }
-     if (command === "generate") {
-       message.author.send(password)
-     }
-        
-        if (command === "doxtest") { // set const = (nameFirst.nameLast)
-          var nameFirst = ['JAMES	', 'JOHN	', 'ROBERT	', 'MICHAEL  ', 'WILLIAM	', 'DAVID	', 'RICHARD	', 'CHARLES	', 'JOSEPH	', 'DONALD		', 'BRIAN   ', 'ANTHONY	'] [Math.floor(Math.random() * 12)];
-          var nameLast = ['JAMES	', 'JOHN	', 'ROBERT	', 'MICHAEL  ', 'WILLIAM	', 'DAVID	', 'RICHARD	', 'CHARLES	', 'JOSEPH	', 'DONALD		', 'BRIAN   ', 'ANTHONY	'] [Math.floor(Math.random() * 12)];
-          
-        } 
-      
-
+  
     if (command === "av") {
       if(message.mentions.users.size){
         let member=message.mentions.users.first()
