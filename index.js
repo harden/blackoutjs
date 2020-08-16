@@ -53,12 +53,15 @@ client.on("message", async message => {           //  makes sure that the bot on
   }
   
   if(command === "say") { // makes the bot say whatever the user says (doesnt run commands)
-    
+    if(!message.member.roles.cache.some(r=> ["Admin", "Owner"].includes(r.name)))
+    message.reply("Sorry, you don't have permissions to use this!");
+    else {
     
     const sayMessage = args.join(" ");
     
     message.delete().catch(O_o=>{}); 
     message.channel.send(sayMessage);
+    }
   }
   
   if(command === "ban") {
