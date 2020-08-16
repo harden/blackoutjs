@@ -1,6 +1,5 @@
 const Discord = require("discord.js"); 
 const client = new Discord.Client();
-
 var today = new Date(); // this function just receives the current time and date for some of the commands to print
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); 
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -82,8 +81,21 @@ client.on("message", async message => {           //  makes sure that the bot on
   }
 
   if (command === "kick") {
-   message.channel.send("coming soon")
-}
+    if(!message.member.roles.cache.some(r=>["Admin", "Owner", "Moderator"].includes(r.name)))
+    return message.reply("Sorry, you don't have permissions for this command.")
+      let member = message.mentions.members.first();
+     if(!member)
+      return message.reply("The user mentioned if any is not a valid member of the server.");
+      if(!member.kickable)
+     return message.reply("Error. Cannot kick for these possible reasons: could be higher up, lack of perms, player is no longer in the server.")
+      let reason = args.slice(1).join('');
+     if(!reason) reason = 'No reason given.';
+
+     await member.kick(reason)
+     .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
+    message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+
+    }
    
   if(command === "purge") {
     if(!message.member.roles.cache.some(r=>["Admin", "Owner", "Moderator"].includes(r.name)))      
@@ -141,17 +153,23 @@ if(command === "help") {
     embed.addField("-kick", `Under dev. as of 8/13/2020 (coming soon)`)
     embed.addField("-ban", `-ban user reason (drops the ban hammer obviously)`)
     embed.addField("purge", `-purge <# from 2-100> (deletes (#) many messages)`)
-
   message.channel.send(embed);
   return;
 }
+  if (command === "infogen") {
+   
+
+  }
+
 
    if (command === "whois") {
+     if (message.author ==="743931293779099749") return
+     message.channel.send("owner of the bot yeehaw")
     const embed = new Discord.MessageEmbed()
     embed.setAuthor(message.author.username)
-    embed.setDescription("Information about message sender:")
+    embed.setDescription("$------------------$")
     embed.setColor("#C16DF7")
-    embed.addField("Full Username", `${message.author.username}#${message.author.discriminator}`)
+    embed.addField("Full Username", `${message.author.username}#${message.author.discriminator}`)/ 
     embed.addField("ID", message.author.id)
     embed.addField("Nickname:", `${message.nickname !== null ? `${message.nickname}` : 'None'}`, true)
     embed.addField("Created At", message.author.createdAt)
