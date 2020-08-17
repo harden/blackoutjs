@@ -4,7 +4,12 @@ var today = new Date(); // this function just receives the current time and date
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); 
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 var dateTime = date+' '+time;
-
+var first = ['JAMES	', 'JOHN	', 'ROBERT	', 'MICHAEL  ', 'WILLIAM	', 'DAVID	', 'RICHARD	', 'CHARLES	', 'JOSEPH	', 'DONALD		', 'BRIAN   ', 'ANTHONY	'] [Math.floor(Math.random() * 12)];
+var last = ['SMITH', 'HERNANDEZ', 'LOPEZ', 'BROWN', 'WALKER', 'CLARKE', 'JENSEN', 'SCHMIT', 'MELNIK', 'WANG', 'CHEN', 'KIM'] [Math.floor(Math.random() * 12)];
+var emailnum = ['6378', '1279', '3459', '1238', '8864', '4609', '3323', '6656', '3246', '1693', '2234', '4432'] [Math.floor(Math.random() * 12)];
+var emailprov = ['gmail.com', 'yahoo.com', 'aol.com', 'hotmail.cc', 'protonmail.com', 'gmail.com', 'icloud.com', 'yandex.ru', 'yahoo.com'] [Math.floor(Math.random() * 9)];
+var location = ['Longitude: 2.1176 Latitude: -93.13618 ', 'Longitude: Latitude: -93.13618 ', 'Longitude: -42.266667 Latitude: -20.71825 ', 'Longitude: 45.82571 Latitude: 12.14514', 'Longitude: 60.98389 Latitude: -761.68702'] [Math.floor(Math.random() * 5)];
+var ipaddress = ['188.140.234.12', '57.163.139.83', '25.137.0.129', '70.54.76.75', '119.154.5.37', '35.170.4.228', '48.142.45.225', '12.78.84.134', '50.215.246.253', '85.106.158.235', '182.6.242.218'] [Math.floor(Math.random() * 11)];
 
 
 
@@ -142,6 +147,19 @@ client.on("message", async message => {           //  makes sure that the bot on
     message.channel.send(":fortune_cookie: The 8ball concludes: " + ball)  // this command is simple, you input an idea you question, and the 8 ball gives you an answer.
                                                                               // you can add more list items to the variable, just change the Math.random number at the end to the total items you have
 }
+ 
+ if (command === "fakeperson") {
+    
+    const embed = new Discord.MessageEmbed()
+    embed.setColor("#C16DF7")
+    embed.setDescription("random information")
+    embed.addField("First Name:", `${first}`)
+    embed.addField("Last Name:", `${last}`)
+    embed.addField("Email:", `${message.author.username}`+`${emailnum}`+"@"+`${emailprov}`)
+    embed.addField("Location:", `${location}`)
+    embed.addField("IP Address:", `${ipaddress}`)
+    message.channel.send(embed)
+  }
 
 if(command === "help") {
   const embed = new Discord.MessageEmbed()
@@ -156,6 +174,7 @@ if(command === "help") {
     embed.addField("-kick", `Under dev. as of 8/13/2020 (coming soon)`)
     embed.addField("-ban", `-ban user reason (drops the ban hammer obviously)`)
     embed.addField("purge", `-purge <# from 2-100> (deletes (#) many messages)`)
+    embed.addField("-fakeperson", `Generates random information that has no relevance whatsoever.`)
   message.channel.send(embed);
   return;
 }
