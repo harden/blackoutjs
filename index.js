@@ -178,10 +178,7 @@ if(command === "help") {
   message.channel.send(embed);
   return;
 }
-  if (command === "infogen") {
-   
-
-  }
+  
 
 
    if (command === "whois") {
